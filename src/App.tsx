@@ -12,6 +12,7 @@ function App() {
   const [attempt, setAttempt] = useState(0);
   const [message, setMessage] = useState("");
   const state = store.getState();
+  const [loading, setLoading] = useState(false);
   const [guesses, setGuesses] = useState<guesses>([
     { word: "", id: 0 },
     { word: "", id: 1 },
@@ -29,6 +30,9 @@ function App() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage((event.target as HTMLInputElement).value);
+  };
+  const handleLoading = (e: boolean) => {
+    setLoading(e);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -76,17 +80,19 @@ function App() {
         style={handleStyle}
         error={handleError}
       />
-      <input
-        className={errorStyle}
-        type="text"
-        id="message"
-        name="message"
-        value={message}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        maxLength={5}
-        disabled={status}
-      />
+      {loading && (
+        <input
+          className={errorStyle}
+          type="text"
+          id="message"
+          name="message"
+          value={message}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          maxLength={5}
+          disabled={status}
+        />
+      )}
       {guessChecker && (
         <Confetti
           width={windowSize.current[0]}
@@ -96,7 +102,7 @@ function App() {
           recycle={false}
         />
       )}
-      <BaseBoard guesses={guesses} />
+      <BaseBoard guesses={guesses} loading={handleLoading} />
     </div>
   );
 }
