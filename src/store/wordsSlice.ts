@@ -20,19 +20,13 @@ export const wordsSlice = createSlice({
     },
     fetchWords: (state, action: PayloadAction<string[]>) => {
       state.words = action.payload;
-    //   if (state.words.length > 1 )
-    //   {
-
-    //       state.word = state.words[Math.floor(Math.random() * state.words?.length)] 
-    //   }
-
     },
    
   },
 });
 
-// Action creators are generated for each case reducer function
+
 export const { incrementScore, fetchWords, randomWord } =
 wordsSlice.actions;
-// You must export the reducer as follows for it to be able to be read by the store.
+
 export default wordsSlice.reducer;

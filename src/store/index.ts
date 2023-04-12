@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import wordsSlice from "./wordsSlice";
+import wordsSlice from './wordsSlice'
 
 const store = configureStore({
   reducer: {

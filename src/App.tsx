@@ -12,7 +12,6 @@ function App() {
   const [attempt, setAttempt] = useState(0);
   const [message, setMessage] = useState("");
   const state = store.getState();
-
   const [guesses, setGuesses] = useState<guesses>([
     { word: "", id: 0 },
     { word: "", id: 1 },
@@ -21,7 +20,8 @@ function App() {
     { word: "", id: 4 },
     { word: "", id: 5 },
   ]);
-  const [status, setStatus] = useState<Boolean>(false);
+  const [guessChecker, setGuessChecker] = useState(false);
+  const [status, setStatus] = useState(false);
   const [error, setError] = useState<Boolean>(false);
   const [errorStyle, setErrorStyle] = useState(
     `bg-white text-gray-700 p-1 my-2 outline-none rounded-md w-full`
@@ -41,12 +41,19 @@ function App() {
       setGuesses([...newArr]);
       setAttempt((attempt) => attempt + 1);
       setMessage((message) => (message = ""));
-      if (attempt >= 5) {
+      if (
+        attempt >= 5 &&
+        message.toUpperCase() !== state.words.word.toUpperCase()
+      ) {
         console.log("test");
         setStatus(true);
+        setGuessChecker(false);
       }
-      if (message.toUpperCase() === state.words.word) {
-        setStatus(true);
+      if (state?.words?.word) {
+        if (message.toUpperCase() === state?.words?.word) {
+          setStatus(true);
+          setGuessChecker(true);
+        }
       }
     }
   };
@@ -65,7 +72,7 @@ function App() {
         guesses={guesses}
         attempts={attempt}
         word={state?.words?.word}
-        status={status}
+        status={guessChecker}
         style={handleStyle}
         error={handleError}
       />
@@ -80,7 +87,7 @@ function App() {
         maxLength={5}
         disabled={status}
       />
-      {status && !error && (
+      {guessChecker && (
         <Confetti
           width={windowSize.current[0]}
           height={windowSize.current[1]}

@@ -24,7 +24,7 @@ export default function BaseBoard({ guesses }: Props) {
   }, []);
 
   return (
-    <section className="flex flex-col gap-y-2 bg-gray-600 p-2 rounded-md">
+    <section className="flex flex-col p-2 bg-gray-600 rounded-md gap-y-2">
       {guesses.map((el) => {
         return <BaseRow key={el.id} word={el.word} />;
       })}

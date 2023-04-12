@@ -8,6 +8,7 @@ type props = {
   guesses: guesses;
   style: (e: string) => void;
   error: (e: Boolean) => void;
+  children?: JSX.Element | JSX.Element[];
 };
 
 export default function ErrorHandler({
@@ -31,7 +32,7 @@ export default function ErrorHandler({
       style(
         `bg-white text-gray-700 p-1 my-2 disabled:bg-gray-300  disabled:border-0 border-2 outline-none border-red-400 rounded-md w-full`
       );
-    } else if (message.includes(" ")) {
+    } else if (message.includes(" ") || !message.match(/^[A-Za-z]+$/)) {
       error(true);
 
       style(
@@ -59,10 +60,10 @@ export default function ErrorHandler({
   }, [message]);
   return (
     <div className="w-fit">
-      {status}
-      {attempts === 5 && !status && <span>{message}</span>}
-      {status && !errorState && <span>Correct! your word was {word}</span>}
-      {status && errorState && <span>Wrong. Your word was {word}</span>}
+      <>
+        {status && <span>Correct! your word was {word}</span>}
+        {attempts === 6 && !status && <span>Wrong. Your word was {word}</span>}
+      </>
     </div>
   );
 }

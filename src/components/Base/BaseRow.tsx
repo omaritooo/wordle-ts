@@ -3,6 +3,7 @@ import BaseTile from "./BaseTile";
 import "./../../App.css";
 import { guess } from "../../types/index";
 import store from "../../store";
+
 export default function BaseRow({ word }: { word: string }) {
   const [status, setStatus] = useState(false);
   const state = store.getState();
@@ -34,16 +35,6 @@ export default function BaseRow({ word }: { word: string }) {
           );
         })
       )}
-
-      {/* {wordArr.map((el, index) => {
-        return (
-          <BaseTile
-            word={"ALIDE"}
-            fakeLetter={fakeWord[index]}
-            letter={word[index]}
-          />
-        );
-      })} */}
     </div>
   );
 }
