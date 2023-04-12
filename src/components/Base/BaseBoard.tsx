@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import BaseRow from "./BaseRow";
 import store from "../../store";
 import { guesses, guess } from "../../types/index";
+import { words } from "../../repo/words";
 import { fetchWords, randomWord } from "../../store/wordsSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -25,6 +26,12 @@ export default function BaseBoard({ guesses, loading }: Props) {
           setLoader(true);
           loading(true);
         }
+      })
+      .catch((err) => {
+        dispatch(fetchWords(words));
+        dispatch(randomWord());
+        setLoader(true);
+        loading(true);
       });
   }, []);
 
